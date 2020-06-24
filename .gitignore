@@ -1,0 +1,19 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Deploy
+bin/
+dist/
+
+# Test binary, built with `go test -c`
+*.test
+
+# Local binary
+/scaleway-ddns
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out

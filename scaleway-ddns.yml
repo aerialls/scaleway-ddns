@@ -1,0 +1,11 @@
+scaleway:
+  organization_id: __ORGANIZATION_ID__
+  access_key: __ACCESS_KEY__
+  secret_key: __SECRET_KEY__
+
+domain:
+  name: contoso.com
+  record: public
+  ttl: 60
+
+interval: 300

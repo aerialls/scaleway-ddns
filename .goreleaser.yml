@@ -1,0 +1,34 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - main: ./cmd/scaleway-ddns
+    env:
+      - CGO_ENABLED=0
+    goarch:
+      - amd64
+    goos:
+      - darwin
+      - linux
+      - windows
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.ShortCommit}}
+      - -X main.date={{.Date}}
+checksum:
+  name_template: checksums.txt
+snapshot:
+  name_template: "{{.Tag}}-{{.ShortCommit}}"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - ^(feat|fix)\(doc\)
+      - ^(feat|fix)\(test\)
+      - ^Merge pull request
+archives:
+  - wrap_in_directory: true
+    files:
+      - LICENSE
+      - scaleway-ddns.yml
