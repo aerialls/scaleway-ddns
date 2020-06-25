@@ -8,6 +8,7 @@ import (
 )
 
 const (
+	// IntervalMinValue is the lowest possible value between two updates (in sec)
 	IntervalMinValue = 60
 )
 
