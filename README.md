@@ -6,10 +6,27 @@
 
 Dynamic DNS service based on [Scaleway DNS](https://console.scaleway.com/domains/external).
 
+## Setup
+
+### From binaries
+
+Download the most suitable binary from [the releases tab](https://github.com/aerialls/scaleway-ddns/releases). Builds are available for Linux, macOS and Windows.
+
+```bash
+tar xf scaleway-ddns_X.X.X_linux_amd64.tar.gz
+./scaleway-ddns_X.X.X_linux_amd64/scaleway-ddns
+```
+
+### Using the docker image
+
+```bash
+docker run --rm -d  --name scaleway-ddns -v `pwd`:/config aerialls/scaleway-ddns:latest --config /config/scaleway-ddns.yml
+```
+
 ## Usage
 
-```
-scaleway-ddns --config /etc/scaleway-ddns/scaleway-ddns.yml
+```bash
+./scaleway-ddns --config /etc/scaleway-ddns/scaleway-ddns.yml --dry-run --verbose
 ```
 
 ## Parameters
