@@ -13,13 +13,13 @@ builds:
       - windows
     ldflags:
       - -s -w
-      - -X main.version={{.Version}}
-      - -X main.commit={{.ShortCommit}}
-      - -X main.date={{.Date}}
+      - -X main.version={{ .Version }}
+      - -X main.commit={{ .ShortCommit }}
+      - -X main.date={{ .Date }}
 checksum:
   name_template: checksums.txt
 snapshot:
-  name_template: "{{.Tag}}-{{.ShortCommit}}"
+  name_template: "{{ .Tag }}-{{ .ShortCommit }}"
 changelog:
   sort: asc
   filters:
@@ -32,3 +32,7 @@ archives:
     files:
       - LICENSE
       - scaleway-ddns.yml
+dockers:
+  - image_templates:
+      - "docker.pkg.github.com/aerialls/scaleway-ddns:latest"
+      - "docker.pkg.github.com/aerialls/scaleway-ddns:{{ .Tag }}"
