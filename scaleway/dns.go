@@ -43,7 +43,7 @@ func (d *DNS) UpdateRecord(domain string, name string, ttl uint32, data string, 
 			{
 				Set: &domainAPI.RecordChangeSet{
 					Name: name,
-					Type: domainAPI.RecordTypeA,
+					Type: d.getRecordTypeFromString(recordType),
 					Records: []*domainAPI.Record{
 						{
 							Name: name,
