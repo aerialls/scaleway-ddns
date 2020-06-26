@@ -36,3 +36,4 @@ dockers:
   - image_templates:
       - "docker.pkg.github.com/aerialls/scaleway-ddns:latest"
       - "docker.pkg.github.com/aerialls/scaleway-ddns:{{ .Tag }}"
+      - "docker.pkg.github.com/aerialls/scaleway-ddns:{{ .Major }}"
