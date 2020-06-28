@@ -27,38 +27,45 @@ func NewDynamicDNSUpdater(
 // Start launches the ticker to update DNS records every interval
 func (d *DynamicDNSUpdater) Start() {
 	cfg := d.container.Config
-	logger := d.container.Logger
+
+	d.doStart()
 
 	ticker := time.NewTicker(time.Duration(cfg.Interval) * time.Second)
-
 	for {
 		select {
 		case <-ticker.C:
-			logger.Debugf(
-				"updating A/AAAA records for %s.%s",
-				cfg.DomainConfig.Record,
-				cfg.DomainConfig.Name,
+			d.doStart()
+		}
+	}
+}
+
+func (d *DynamicDNSUpdater) doStart() {
+	logger := d.container.Logger
+	cfg := d.container.Config
+
+	logger.Debugf(
+		"updating A/AAAA records for %s.%s",
+		cfg.DomainConfig.Record,
+		cfg.DomainConfig.Name,
+	)
+
+	recordTypes := map[string]config.IPConfig{
+		"A":    cfg.IPv4Config,
+		"AAAA": cfg.IPv6Config,
+	}
+
+	for recordType, recordCfg := range recordTypes {
+		err := d.UpdateRecord(
+			cfg.DomainConfig,
+			recordCfg,
+			recordType,
+			d.dryRun,
+		)
+
+		if err != nil {
+			logger.WithError(err).Errorf(
+				"unable to update %s record", recordType,
 			)
-
-			recordTypes := map[string]config.IPConfig{
-				"A":    cfg.IPv4Config,
-				"AAAA": cfg.IPv6Config,
-			}
-
-			for recordType, recordCfg := range recordTypes {
-				err := d.UpdateRecord(
-					cfg.DomainConfig,
-					recordCfg,
-					recordType,
-					d.dryRun,
-				)
-
-				if err != nil {
-					logger.WithError(err).Errorf(
-						"unable to update %s record", recordType,
-					)
-				}
-			}
 		}
 	}
 }
