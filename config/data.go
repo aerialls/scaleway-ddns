@@ -68,7 +68,7 @@ var (
 	// DefaultTelegramConfig is the default configuration to use Telegram notifications
 	DefaultTelegramConfig = TelegramConfig{
 		Enabled:  false,
-		Template: "DNS record *{{ .Record }}.{{ .Domain }}* has been updated from *{{ .PreviousIP }}* to *{{ .NewIP }}*",
+		Template: "DNS record *{{ .RecordName }}.{{ .Domain }}* has been updated from *{{ .PreviousIP }}* to *{{ .NewIP }}*",
 	}
 
 	// DefaultConfig is the global default configuration.

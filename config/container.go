@@ -8,7 +8,7 @@ import (
 
 // Notifier interface to represent any notifier
 type Notifier interface {
-	Notify(domain string, record string, previousIP string, newIP string) error
+	Notify(domain string, recordName string, recordType string, previousIP string, newIP string) error
 }
 
 // Container structure to hold global objects

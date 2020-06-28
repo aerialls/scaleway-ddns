@@ -28,6 +28,7 @@ func NewDynamicDNSUpdater(
 func (d *DynamicDNSUpdater) Start() {
 	cfg := d.container.Config
 
+	// Start the first update now
 	d.doStart()
 
 	ticker := time.NewTicker(time.Duration(cfg.Interval) * time.Second)
@@ -140,6 +141,7 @@ func (d *DynamicDNSUpdater) UpdateRecord(
 		err := notifier.Notify(
 			domain.Name,
 			domain.Record,
+			recordType,
 			scalewayIP,
 			currentIP,
 		)

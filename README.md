@@ -76,12 +76,13 @@ telegram:
   enabled: true
   token: __TELEGRAM_TOKEN__
   chat_id: __TELEGRAM_CHAT_ID__
-  template: DNS record *{{ .Record }}.{{ .Domain }}* has been updated
+  template: DNS record *{{ .RecordName }}.{{ .Domain }}* has been updated
 ```
 
 The following variables can be used in the template message.
 
-* Record
+* RecordName
+* RecordType
 * Domain
 * PreviousIP
 * NewIP

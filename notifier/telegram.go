@@ -17,7 +17,8 @@ type Telegram struct {
 // TelegramMessageData holds information for the Telegram template message
 type TelegramMessageData struct {
 	Domain     string
-	Record     string
+	RecordName string
+	RecordType string
 	PreviousIP string
 	NewIP      string
 }
@@ -36,7 +37,13 @@ func NewTelegram(
 }
 
 // Notify launches a new message on Telegram when the IP has changed
-func (t *Telegram) Notify(domain string, record string, previousIP string, newIP string) error {
+func (t *Telegram) Notify(
+	domain string,
+	recordName string,
+	recordType string,
+	previousIP string,
+	newIP string,
+) error {
 	bot, err := tgbotapi.NewBotAPI(t.token)
 	if err != nil {
 		return err
@@ -54,7 +61,8 @@ func (t *Telegram) Notify(domain string, record string, previousIP string, newIP
 	var message bytes.Buffer
 	err = template.Execute(&message, &TelegramMessageData{
 		Domain:     domain,
-		Record:     record,
+		RecordName: recordName,
+		RecordType: recordType,
 		PreviousIP: previousIP,
 		NewIP:      newIP,
 	})
