@@ -13,4 +13,4 @@ interval: 300
 telegram:
   enabled: true
   token: __TELEGRAM_TOKEN__
-  chat_id: 98873332
+  chat_id: __TELEGRAM_CHAT_ID__
