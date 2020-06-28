@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/aerialls/scaleway-ddns/config"
+	"github.com/aerialls/scaleway-ddns/ddns"
+	"github.com/aerialls/scaleway-ddns/notifier"
 	"github.com/aerialls/scaleway-ddns/scaleway"
 
 	"github.com/sirupsen/logrus"
@@ -41,39 +42,20 @@ var rootCmd = &cobra.Command{
 			logger.Fatal(err)
 		}
 
-		ticker := time.NewTicker(time.Duration(cfg.Interval) * time.Second)
+		// Create a container to store all objects in one place
+		container := config.NewContainer(logger, cfg, dns)
 
-		for {
-			select {
-			case <-ticker.C:
-				logger.Debugf(
-					"updating A/AAAA records for %s.%s",
-					cfg.DomainConfig.Record,
-					cfg.DomainConfig.Name,
-				)
-
-				recordTypes := map[string]config.IPConfig{
-					"A":    cfg.IPv4Config,
-					"AAAA": cfg.IPv6Config,
-				}
-
-				for recordType, recordCfg := range recordTypes {
-					err := UpdateDNSRecordFromCurrentIP(
-						dns,
-						cfg.DomainConfig,
-						recordCfg,
-						recordType,
-						dryRun,
-					)
-
-					if err != nil {
-						logger.WithError(err).Errorf(
-							"unable to update %s record", recordType,
-						)
-					}
-				}
-			}
+		if cfg.TelegramConfig.Enabled {
+			tgCfg := cfg.TelegramConfig
+			container.AddNotifier(notifier.NewTelegram(
+				tgCfg.Token,
+				tgCfg.ChatID,
+				tgCfg.Template,
+			))
 		}
+
+		updater := ddns.NewDynamicDNSUpdater(container, dryRun)
+		updater.Start()
 	},
 }
 
