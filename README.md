@@ -58,6 +58,30 @@ ipv4:
 ipv6:
   enabled: true
   url: https://api-ipv6.ip.sb/ip
+
+telegram:
+  enabled: true
+  token: __TELEGRAM_TOKEN__
+  chat_id: __TELEGRAM_CHAT_ID__
 ```
 
 **Note**: IPv6 is disabled by default.
+
+## Telegram
+
+It's possible to send a Telegram message (in markdown format) when the DNS record changes.
+
+```yaml
+telegram:
+  enabled: true
+  token: __TELEGRAM_TOKEN__
+  chat_id: __TELEGRAM_CHAT_ID__
+  template: DNS record *{{ .Record }}.{{ .Domain }}* has been updated
+```
+
+The following variables can be used in the template message.
+
+* Record
+* Domain
+* PreviousIP
+* NewIP
