@@ -49,17 +49,11 @@ func (t *Telegram) Notify(
 		return err
 	}
 
-	template, err := templating.New("telegram").Parse(t.template)
-	if err != nil {
-		return err
-	}
-
 	if previousIP == "" {
 		previousIP = "(empty)"
 	}
 
-	var message bytes.Buffer
-	err = template.Execute(&message, &TelegramMessageData{
+	message, err := t.getMessageFromTemplate(&TelegramMessageData{
 		Domain:     domain,
 		RecordName: recordName,
 		RecordType: recordType,
@@ -71,7 +65,7 @@ func (t *Telegram) Notify(
 		return err
 	}
 
-	msg := tgbotapi.NewMessage(t.chatID, message.String())
+	msg := tgbotapi.NewMessage(t.chatID, message)
 	msg.ParseMode = "markdown"
 
 	_, err = bot.Send(msg)
@@ -80,4 +74,20 @@ func (t *Telegram) Notify(
 	}
 
 	return nil
+}
+
+func (t *Telegram) getMessageFromTemplate(data *TelegramMessageData) (string, error) {
+	template, err := templating.New("telegram").Parse(t.template)
+	if err != nil {
+		return "", err
+	}
+
+	var message bytes.Buffer
+	err = template.Execute(&message, data)
+
+	if err != nil {
+		return "", err
+	}
+
+	return message.String(), nil
 }
