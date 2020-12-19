@@ -16,7 +16,7 @@ var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Prints the version",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(fmt.Sprintf("scaleway-ddns %s (commit %s, built at %s)", version, commit, date))
+		fmt.Printf("scaleway-ddns %s (commit %s, built at %s)\n", version, commit, date)
 	},
 }
 

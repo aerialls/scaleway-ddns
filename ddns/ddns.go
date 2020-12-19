@@ -32,11 +32,8 @@ func (d *DynamicDNSUpdater) Start() {
 	d.doStart()
 
 	ticker := time.NewTicker(time.Duration(cfg.Interval) * time.Second)
-	for {
-		select {
-		case <-ticker.C:
-			d.doStart()
-		}
+	for range ticker.C {
+		d.doStart()
 	}
 }
 
