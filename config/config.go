@@ -40,9 +40,9 @@ func (c *Config) validate() error {
 	}
 
 	scwCfg := c.ScalewayConfig
-	if scwCfg.AccessKey == "" || scwCfg.SecretKey == "" || scwCfg.OrganizationID == "" {
+	if scwCfg.AccessKey == "" || scwCfg.SecretKey == "" || scwCfg.ProjectID == "" {
 		return fmt.Errorf(
-			"scaleway parameters (access_key, secret_key, organization_id) cannot be empty",
+			"scaleway parameters (access_key, secret_key, project_id) cannot be empty",
 		)
 	}
 

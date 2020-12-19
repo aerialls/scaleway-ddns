@@ -33,7 +33,7 @@ var rootCmd = &cobra.Command{
 
 		dns, err := scaleway.NewDNS(
 			logger,
-			cfg.ScalewayConfig.OrganizationID,
+			cfg.ScalewayConfig.ProjectID,
 			cfg.ScalewayConfig.AccessKey,
 			cfg.ScalewayConfig.SecretKey,
 		)
@@ -68,7 +68,10 @@ func init() {
 	rootCmd.Flags().BoolVarP(&verbose, "verbose", "v", false, "enable verbose logging")
 	rootCmd.Flags().BoolVarP(&dryRun, "dry-run", "d", false, "don't update DNS records")
 
-	rootCmd.MarkFlagRequired("config")
+	err := rootCmd.MarkFlagRequired("config")
+	if err != nil {
+		logger.Fatal(err)
+	}
 }
 
 func initConfig() {
