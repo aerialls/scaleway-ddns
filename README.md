@@ -40,7 +40,7 @@ docker run --rm -d  --name scaleway-ddns -v `pwd`:/config aerialls/scaleway-ddns
 
 ```yaml
 scaleway:
-  organization_id: __ORGANIZATION_ID__
+  project_id: __PROJECT_ID__
   access_key: __ACCESS_KEY__
   secret_key: __SECRET_KEY__
 

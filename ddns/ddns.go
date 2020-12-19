@@ -87,13 +87,14 @@ func (d *DynamicDNSUpdater) UpdateRecord(
 		return nil
 	}
 
-	scalewayIP, err := dns.GetRecord(domain.Name, domain.Record, recordType)
+	scalewayRecord, err := dns.GetRecord(domain.Name, domain.Record, recordType)
 	if err != nil {
 		return err
 	}
 
-	if scalewayIP == "" {
-		scalewayIP = "(empty)"
+	scalewayIP := "(empty)"
+	if scalewayRecord != nil {
+		scalewayIP = scalewayRecord.Data
 	}
 
 	currentIP, err := ip.GetPublicIP(cfg.URL)
@@ -124,13 +125,24 @@ func (d *DynamicDNSUpdater) UpdateRecord(
 		return nil
 	}
 
-	err = dns.UpdateRecord(
-		domain.Name,
-		domain.Record,
-		domain.TTL,
-		currentIP,
-		recordType,
-	)
+	if scalewayRecord != nil {
+		err = dns.UpdateRecord(
+			domain.Name,
+			scalewayRecord.ID,
+			domain.Record,
+			domain.TTL,
+			currentIP,
+			recordType,
+		)
+	} else {
+		err = dns.AddRecord(
+			domain.Name,
+			domain.Record,
+			domain.TTL,
+			currentIP,
+			recordType,
+		)
+	}
 
 	if err != nil {
 		return err

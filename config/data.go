@@ -23,9 +23,9 @@ type IPConfig struct {
 
 // ScalewayConfig struct for the required configuration to use the Scaleway API
 type ScalewayConfig struct {
-	OrganizationID string `yaml:"organization_id"`
-	AccessKey      string `yaml:"access_key"`
-	SecretKey      string `yaml:"secret_key"`
+	ProjectID string `yaml:"project_id"`
+	AccessKey string `yaml:"access_key"`
+	SecretKey string `yaml:"secret_key"`
 }
 
 // DomainConfig struct for the domain parameters

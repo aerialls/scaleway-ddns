@@ -33,7 +33,7 @@ var rootCmd = &cobra.Command{
 
 		dns, err := scaleway.NewDNS(
 			logger,
-			cfg.ScalewayConfig.OrganizationID,
+			cfg.ScalewayConfig.ProjectID,
 			cfg.ScalewayConfig.AccessKey,
 			cfg.ScalewayConfig.SecretKey,
 		)
