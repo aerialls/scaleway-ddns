@@ -1,10 +1,10 @@
 module github.com/aerialls/scaleway-ddns
 
-go 1.15
+go 1.16
 
 require (
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
-	github.com/scaleway/scaleway-sdk-go v1.0.0-beta.7.0.20201215142451-63cc4dfb5426
+	github.com/scaleway/scaleway-sdk-go v1.0.0-beta.7.0.20210223165440-c65ae3540d44
 	github.com/sirupsen/logrus v1.8.0
 	github.com/spf13/cobra v1.1.3
 	github.com/stretchr/testify v1.7.0
