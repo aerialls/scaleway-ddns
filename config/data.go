@@ -46,13 +46,13 @@ type TelegramConfig struct {
 var (
 	// DefaultIPv4Config is the default configuration for IPv4
 	DefaultIPv4Config = IPConfig{
-		URL:     "https://api-ipv4.ip.sb/ip",
+		URL:     "https://api.ipify.org",
 		Enabled: true,
 	}
 
 	// DefaultIPv6Config is the default configuration for IPv6
 	DefaultIPv6Config = IPConfig{
-		URL:     "https://api-ipv6.ip.sb/ip",
+		URL:     "https://api6.ipify.org",
 		Enabled: false,
 	}
 
