@@ -1,10 +1,10 @@
 module github.com/aerialls/scaleway-ddns
 
-go 1.18
+go 1.19
 
 require (
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
-	github.com/scaleway/scaleway-sdk-go v1.0.0-beta.7.0.20210223165440-c65ae3540d44
+	github.com/scaleway/scaleway-sdk-go v1.0.0-beta.9
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cobra v1.5.0
 	github.com/stretchr/testify v1.8.0
@@ -14,9 +14,9 @@ require (
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/inconshreveable/mousetrap v1.0.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
+	golang.org/x/sys v0.0.0-20220829200755-d48e67d00261 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
