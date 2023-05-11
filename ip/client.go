@@ -3,7 +3,7 @@ package ip
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net"
 	"net/http"
 	"strings"
@@ -16,13 +16,15 @@ func GetPublicIP(url string) (string, error) {
 		return "", err
 	}
 
-	defer response.Body.Close()
+	defer func(Body io.ReadCloser) {
+		_ = Body.Close()
+	}(response.Body)
 
 	if response.StatusCode != http.StatusOK {
 		return "", fmt.Errorf("unable to get public IP from endpoint %s", url)
 	}
 
-	body, err := ioutil.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return "", err
 	}

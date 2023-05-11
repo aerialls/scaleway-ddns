@@ -114,13 +114,12 @@ func (d *DNS) GetRecord(domain string, name string, recordType string) (*domainA
 }
 
 func (d *DNS) getRecordTypeFromString(recordType string) domainAPI.RecordType {
-	if recordType == "A" {
+	switch recordType {
+	case "A":
 		return domainAPI.RecordTypeA
-	}
-
-	if recordType == "AAAA" {
+	case "AAAA":
 		return domainAPI.RecordTypeAAAA
+	default:
+		return domainAPI.RecordTypeUnknown
 	}
-
-	return domainAPI.RecordTypeUnknown
 }
