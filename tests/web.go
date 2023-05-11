@@ -11,7 +11,7 @@ func StartWebServer(requests map[string]string) *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		for uri, content := range requests {
 			if r.RequestURI == uri {
-				fmt.Fprintln(w, content)
+				_, _ = fmt.Fprintln(w, content)
 			}
 		}
 	}))

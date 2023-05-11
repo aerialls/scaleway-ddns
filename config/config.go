@@ -2,22 +2,22 @@ package config
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 
 	"gopkg.in/yaml.v2"
 )
 
 // NewConfig returns a new config object if the file exists
 func NewConfig(path string) (*Config, error) {
-	data, err := ioutil.ReadFile(path)
+	data, err := os.ReadFile(path)
 	if err != nil {
-		return nil, fmt.Errorf("unable to load the config from file (%s)", err)
+		return nil, fmt.Errorf("unable to load the config from file %s: %w", path, err)
 	}
 
 	cfg := &Config{}
 	*cfg = DefaultConfig
 
-	err = yaml.Unmarshal([]byte(data), &cfg)
+	err = yaml.Unmarshal(data, &cfg)
 	if err != nil {
 		return nil, err
 	}
