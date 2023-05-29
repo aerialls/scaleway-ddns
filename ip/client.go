@@ -1,6 +1,7 @@
 package ip
 
 import (
+	"log"
 	"errors"
 	"fmt"
 	"io"
@@ -11,7 +12,13 @@ import (
 
 // GetPublicIP returns the current public IP (IPv4 or IPv6 depending of the URL)
 func GetPublicIP(url string) (string, error) {
-	response, err := http.Get(url)
+	client := &http.Client{}
+	request, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	request.Header.Set("User-Agent", "Mozilla")
+	response, err := client.Do(request)
 	if err != nil {
 		return "", err
 	}
