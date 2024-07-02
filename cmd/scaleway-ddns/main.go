@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/aerialls/scaleway-ddns/config"
+	ddnsconfig "github.com/aerialls/scaleway-ddns/config"
 	"github.com/aerialls/scaleway-ddns/ddns"
 	"github.com/aerialls/scaleway-ddns/notifier"
 	"github.com/aerialls/scaleway-ddns/scaleway"
@@ -14,10 +14,10 @@ import (
 )
 
 var (
-	cfgFile string
-	verbose bool
-	logger  *logrus.Logger
-	dryRun  bool
+	configFile string
+	verbose    bool
+	logger     *logrus.Logger
+	dryRun     bool
 )
 
 var rootCmd = &cobra.Command{
@@ -26,31 +26,30 @@ var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		logger.Info("starting dynamic records for Scaleway DNS")
 
-		cfg, err := config.NewConfig(cfgFile)
+		config, err := ddnsconfig.NewConfig(configFile)
 		if err != nil {
 			logger.Fatal(err)
 		}
 
 		dns, err := scaleway.NewDNS(
 			logger,
-			cfg.ScalewayConfig.ProjectID,
-			cfg.ScalewayConfig.AccessKey,
-			cfg.ScalewayConfig.SecretKey,
+			config.ScalewayConfig.ProjectID,
+			config.ScalewayConfig.AccessKey,
+			config.ScalewayConfig.SecretKey,
 		)
 
 		if err != nil {
 			logger.Fatal(err)
 		}
 
-		// Create a container to store all objects in one place
-		container := config.NewContainer(logger, cfg, dns)
+		container := ddnsconfig.NewContainer(logger, config, dns)
 
-		if cfg.TelegramConfig.Enabled {
-			tgCfg := cfg.TelegramConfig
+		if config.TelegramConfig.Enabled {
+			telegramConfig := config.TelegramConfig
 			container.AddNotifier(notifier.NewTelegram(
-				tgCfg.Token,
-				tgCfg.ChatID,
-				tgCfg.Template,
+				telegramConfig.Token,
+				telegramConfig.ChatID,
+				telegramConfig.Template,
 			))
 		}
 
@@ -64,7 +63,7 @@ func init() {
 
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.Flags().StringVar(&cfgFile, "config", "", "config file")
+	rootCmd.Flags().StringVar(&configFile, "config", "", "config file")
 	rootCmd.Flags().BoolVarP(&verbose, "verbose", "v", false, "enable verbose logging")
 	rootCmd.Flags().BoolVarP(&dryRun, "dry-run", "d", false, "don't update DNS records")
 
