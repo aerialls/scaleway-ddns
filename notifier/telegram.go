@@ -4,7 +4,7 @@ import (
 	"bytes"
 	templating "text/template"
 
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	telegrambotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
 // Telegram struct to be able to notify with Telegram messages
@@ -44,7 +44,7 @@ func (t *Telegram) Notify(
 	previousIP string,
 	newIP string,
 ) error {
-	bot, err := tgbotapi.NewBotAPI(t.token)
+	bot, err := telegrambotapi.NewBotAPI(t.token)
 	if err != nil {
 		return err
 	}
@@ -65,7 +65,7 @@ func (t *Telegram) Notify(
 		return err
 	}
 
-	msg := tgbotapi.NewMessage(t.chatID, message)
+	msg := telegrambotapi.NewMessage(t.chatID, message)
 	msg.ParseMode = "markdown"
 
 	_, err = bot.Send(msg)

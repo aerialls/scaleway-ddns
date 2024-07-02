@@ -147,7 +147,7 @@ func (d *DynamicDNSUpdater) UpdateRecord(
 
 	notifiers := d.container.Notifiers
 	for _, notifier := range notifiers {
-		err := notifier.Notify(
+		subErr := notifier.Notify(
 			domain.Name,
 			domain.Record,
 			recordType,
@@ -155,8 +155,8 @@ func (d *DynamicDNSUpdater) UpdateRecord(
 			currentIP,
 		)
 
-		if err != nil {
-			logger.WithError(err).Errorf(
+		if subErr != nil {
+			logger.WithError(subErr).Errorf(
 				"unable to notify the IP change with notifier %T",
 				notifier,
 			)

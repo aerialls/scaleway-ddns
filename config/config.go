@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 // NewConfig returns a new config object if the file exists
@@ -14,20 +14,20 @@ func NewConfig(path string) (*Config, error) {
 		return nil, fmt.Errorf("unable to load the config from file %s: %w", path, err)
 	}
 
-	cfg := &Config{}
-	*cfg = DefaultConfig
+	config := &Config{}
+	*config = DefaultConfig
 
-	err = yaml.Unmarshal(data, &cfg)
+	err = yaml.Unmarshal(data, &config)
 	if err != nil {
 		return nil, err
 	}
 
-	err = cfg.validate()
+	err = config.validate()
 	if err != nil {
 		return nil, err
 	}
 
-	return cfg, nil
+	return config, nil
 }
 
 func (c *Config) validate() error {
