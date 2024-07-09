@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.5.1
-	github.com/scaleway/scaleway-sdk-go v1.0.0-beta.28
+	github.com/scaleway/scaleway-sdk-go v1.0.0-beta.29
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.9.0
